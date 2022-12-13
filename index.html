@@ -46,9 +46,6 @@
             main {
                 padding: 100px 50px;
             }
-            p {
-                padding: 20px 50px;
-            }
             div.slides {
                 width:480px;
                 height:299px;
@@ -74,6 +71,32 @@
             Game Graphics Course 2022
         </header>
         <main>
+            <div class="topic">
+                <h2>Mandatory Home Assignment, deadline 13.12.2022</h2>
+                <div>
+                    <div>
+                        <p>
+                            Create a demo based on examples, which would combine several rendering algorithms together.<br>
+                            Your work must be pushed to your forked github repository. It will be 50% of your result mark.<br>
+                            Deadline 13.12.2022
+                        </p>
+                        <p>Your demo must include
+                        <ul>
+                            <li>Your own 3D model(s)</li>
+                            <li>Your own textures</li>
+                            <li>Any lighting model (Phong, Blinn-Phong, Lambert, Cook Torrance)</li>
+                            <li>Reflection (Planar or Cubemap)</li>
+                            <li>Shadows (Shadowmap)</li>
+                            <li>Any postprocessing effect (optional)</li>
+                        </ul>
+                        </p>
+                        <p>
+                            Use <a href="https://github.com/taphos/game-graphics-course-2022/blob/main/demos/assignment.js">assignment.js</a> as a boilerplate template:
+                            <a href="./demos/index.html?./assignment.js">Assignment</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="topic">
                 <h2>Introduction</h2>      
                 <div>
@@ -148,7 +171,8 @@
                         </div>      
                     </div>
                     <div class="desc">
-                        Coding demo: <a href="./demos/index.html?./texturing.js">Texturing</a>
+                        Coding demo: <a href="./demos/index.html?./texturing.js">Texturing</a><br>
+                        Questions: <a href="https://create.kahoot.it/share/gpu-texturing/1da49f06-f4f9-4412-be68-a65de97b5731" target="_blank">GPU, Texturing quiz</a>
                         Home assignment:
                         <ol>
                             <li>Study the coding demo <a href="https://github.com/taphos/game-graphics-course-2022/blob/main/demos/texturing.js">texturing.js</a></li>
@@ -170,13 +194,71 @@
                         </div>      
                     </div>
                     <div class="desc">
-                        Coding demo: <a href="./demos/index.html?./lighting.js">Lighting</a>
+                        Coding demo: <a href="./demos/index.html?./lighting.js">Lighting</a><br><br>
                         Home assignment:
                         <ol>
                             <li>Study the coding demo <a href="https://github.com/taphos/game-graphics-course-2022/blob/main/demos/lighting.js">lighting.js</a></li>
                             <li>Change light and material parameters</li>
                             <li>Add more iluminated objects and more light sources</li>
                             <li>Add textures (combine lighting and texturing demos)</li>
+                        </ol>
+                    </div>     
+                </div>
+            </div>
+            <div class="topic">
+                <h2>Reflections</h2>      
+                <div>
+                    <div>
+                        <div class="slides">
+                            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTZnHXgsVNKAgUwCtiGHeINdbco6xJr5srGxT1oH3PPzuDMNirjqmBZ8wHy5shVtcoUyaBpr0IsOcpx/embed?start=false&loop=false&delayms=3000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                        </div>      
+                    </div>
+                    <div class="desc">
+                        Coding demo: <a href="./demos/index.html?./reflections.js">Reflections</a><br><br>
+                        Questions: <a href="https://create.kahoot.it/share/lighting-reflections/09fda743-b6d3-4d77-86df-40fd888cf3b6" target="_blank">Lighting, Reflections quiz</a>                        
+                        Home assignment:
+                        <ol>
+                            <li>Study the coding demo <a href="https://github.com/taphos/game-graphics-course-2022/blob/main/demos/reflections.js">reflections.js</a></li>
+                            <li>Figure out how 2 types of reflections are combined - planar and cubemap</li>
+                            <li>Change both reflections roughness</li>
+                            <li>Try combining with tetures and lighting</li>
+                        </ol>
+                    </div>     
+                </div>
+            </div>
+            <div class="topic">
+                <h2>Shadows</h2>      
+                <div>
+                    <div>
+                        <div class="slides">
+                            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSogfkZ4TXRGIlmjrtMOlvsPSDCigVeDYVx7lTnfrB34_5d0lUXuChaR6899NeUCY44b95L60rh9zIb/embed?start=false&loop=false&delayms=3000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                        </div>      
+                    </div>
+                    <div class="desc">
+                        Coding demo: <a href="./demos/index.html?./shadows.js">Shadows</a><br><br>
+                        Home assignment:
+                        <ol>
+                            <li>Study the coding demo <a href="https://github.com/taphos/game-graphics-course-2022/blob/main/demos/shadows.js">shadows.js</a></li>
+                            <li>Figure out how 2 pass rendering pipeline is used to render shadow map</li>
+                            <li>Animate light position</li>
+                            <li>Adjust shadow map size to make sure shadows dont get out of map bounds</li>
+                        </ol>
+                    </div>     
+                </div>
+            </div>
+            <div class="topic">
+                <h2>Post processing</h2>
+                <div>
+                    <div>
+                        <div class="slides">
+                            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTVAj3vzpyHRX5nTvqyHjUnlke6RXpGq_wegcnzpbQ8D_dBVmwDesJd3WpEUHFz2SHGbwCQNoiQ4ZmW/embed?start=false&loop=false&delayms=3000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                        </div>      
+                    </div>
+                    <div class="desc">
+                        Coding demo: <a href="./demos/index.html?./post-processing.js">Post processing</a><br><br>
+                        Home assignment:
+                        <ol>
+                            <li>Study the coding demo <a href="https://github.com/taphos/game-graphics-course-2022/blob/main/demos/post-processing.js">post-processing.js</a></li>                            
                         </ol>
                     </div>     
                 </div>
