@@ -218,10 +218,10 @@ let skyboxVertexShader = `
     }
 `;
 
-let program = app.createProgram(vertexShader, fragmentShader);
-let skyboxProgram = app.createProgram(skyboxVertexShader, skyboxFragmentShader);
-let mirrorProgram = app.createProgram(mirrorVertexShader, mirrorFragmentShader);
-let shadowProgram = app.createProgram(shadowVertexShader, shadowFragmentShader);
+let program = app.createProgram(vertexShader.trim(), fragmentShader.trim());
+let skyboxProgram = app.createProgram(skyboxVertexShader.trim(), skyboxFragmentShader.trim());
+let mirrorProgram = app.createProgram(mirrorVertexShader.trim(), mirrorFragmentShader.trim());
+let shadowProgram = app.createProgram(shadowVertexShader.trim(), shadowFragmentShader.trim());
 
 let vertexArray = app.createVertexArray()
     .vertexAttributeBuffer(0, app.createVertexBuffer(PicoGL.FLOAT, 3, positions))
