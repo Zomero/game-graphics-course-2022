@@ -7,10 +7,10 @@ import {positions, normals, indices} from "../blender/monkey.js"
 // **               Light configuration                **
 // ******************************************************
 
-let baseColor = vec3.fromValues(1.0, 0.1, 0.2);
-let ambientLightColor = vec3.fromValues(0.1, 0.1, 1.0);
+let baseColor = vec3.fromValues(0.5, 0.1, 0.9);
+let ambientLightColor = vec3.fromValues(0.6, 0.0, 0.5);
 let numberOfPointLights = 2;
-let pointLightColors = [vec3.fromValues(1.0, 1.0, 1.0), vec3.fromValues(0.02, 0.4, 0.5)];
+let pointLightColors = [vec3.fromValues(0.3, 0.0, 1.0), vec3.fromValues(0.6, 0.0, 0.3)];
 let pointLightInitialPositions = [vec3.fromValues(5, 0, 2), vec3.fromValues(-5, 0, 2)];
 let pointLightPositions = [vec3.create(), vec3.create()];
 
@@ -99,26 +99,74 @@ let vertexShader = `
         gl_Position = viewProjectionMatrix * worldPosition;                        
     }
 `;
+let skyboxFragmentShader = `
+    #version 300 es
+    precision mediump float;
+    
+    uniform samplerCube cubemap;
+    uniform mat4 viewProjectionInverse;
+    in vec4 v_position;
+    
+    out vec4 outColor;
+    
+    void main() {
+      vec4 t = viewProjectionInverse * v_position;
+      outColor = texture(cubemap, normalize(t.xyz / t.w));
+    }
+`;
 
+// language=GLSL
+let skyboxVertexShader = `
+    #version 300 es
+    
+    layout(location=0) in vec4 position;
+    out vec4 v_position;
+    
+    void main() {
+      v_position = vec4(position.xz, 1.0, 1.0);
+      gl_Position = v_position;
+    }
+`;
 
 app.enable(PicoGL.DEPTH_TEST)
    .enable(PicoGL.CULL_FACE);
 
 let program = app.createProgram(vertexShader.trim(), fragmentShader.trim());
+let skyboxProgram = app.createProgram(skyboxVertexShader.trim(), skyboxFragmentShader.trim());
 
 let vertexArray = app.createVertexArray()
     .vertexAttributeBuffer(0, app.createVertexBuffer(PicoGL.FLOAT, 3, positions))
     .vertexAttributeBuffer(1, app.createVertexBuffer(PicoGL.FLOAT, 3, normals))
     .indexBuffer(app.createIndexBuffer(PicoGL.UNSIGNED_INT, 3, indices));
 
+let skyboxArray = app.createVertexArray()
+    .vertexAttributeBuffer(0, app.createVertexBuffer(PicoGL.FLOAT, 3, planePositions))
+    .indexBuffer(app.createIndexBuffer(PicoGL.UNSIGNED_INT, 3, planeIndices));
+
 let projectionMatrix = mat4.create();
 let viewMatrix = mat4.create();
 let viewProjectionMatrix = mat4.create();
 let modelMatrix = mat4.create();
 
+let skyboxViewProjectionInverse = mat4.create();
+
+async function loadTexture(fileName) {
+    return await createImageBitmap(await (await fetch("images/" + fileName)).blob());
+}
+
 let drawCall = app.createDrawCall(program, vertexArray)
     .uniform("baseColor", baseColor)
     .uniform("ambientLightColor", ambientLightColor);
+
+let skyboxDrawCall = app.createDrawCall(skyboxProgram, skyboxArray)
+    .texture("cubemap", app.createCubemap({
+        negX: await loadTexture("nx.png"),
+        posX: await loadTexture("px.png"),
+        negY: await loadTexture("ny.png"),
+        posY: await loadTexture("py.png"),
+        negZ: await loadTexture("nz.png"),
+        posZ: await loadTexture("pz.png")
+    }));
 
 let cameraPosition = vec3.fromValues(0, 0, 4);
 mat4.fromXRotation(modelMatrix, -Math.PI / 2);
@@ -146,7 +194,17 @@ function draw(timestamp) {
     drawCall.uniform("lightPositions[0]", positionsBuffer);
     drawCall.uniform("lightColors[0]", colorsBuffer);
 
+    let skyboxViewProjectionMatrix = mat4.create();
+    mat4.mul(skyboxViewProjectionMatrix, projMatrix, viewMatrix);
+    mat4.invert(skyboxViewProjectionInverse, skyboxViewProjectionMatrix);
+
     app.clear();
+
+    // app.disable(PicoGL.DEPTH_TEST);
+    // app.disable(PicoGL.CULL_FACE);
+    skyboxDrawCall.uniform("viewProjectionInverse", skyboxViewProjectionInverse);
+    skyboxDrawCall.draw();
+
     drawCall.draw();
 
     requestAnimationFrame(draw);
