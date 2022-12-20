@@ -72,7 +72,7 @@ let mirrorFragmentShader = `
         vec2 screenPos = gl_FragCoord.xy / screenSize;
         
         // 0.03 is a mirror distortion factor, try making a larger distortion         
-        screenPos.x += (texture(distortionMap, vUv).r - 0.5) * 0.03;
+        screenPos.x += (texture(distortionMap, vUv).r - 0.5) * 1.03;
         outColor = texture(reflectionTex, screenPos);
     }
 `;
@@ -219,7 +219,7 @@ let skyboxDrawCall = app.createDrawCall(skyboxProgram, skyboxArray)
 
 let mirrorDrawCall = app.createDrawCall(mirrorProgram, mirrorArray)
     .texture("reflectionTex", reflectionColorTarget)
-    .texture("distortionMap", app.createTexture2D(await loadTexture("noise.png")));
+    .texture("distortionMap", app.createTexture2D(await loadTexture("texture.jpg")));
 
 function renderReflectionTexture()
 {

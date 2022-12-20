@@ -193,7 +193,7 @@ function draw(timems) {
     mat4.multiply(viewProjMatrix, projMatrix, viewMatrix);
 
     vec3.set(lightPosition, 5, 5, 2.5);
-    mat4.lookAt(lightViewMatrix, lightPosition, vec3.fromValues(0, 0, 0), vec3.fromValues(0, 1, 0));
+    mat4.lookAt(lightViewMatrix, lightPosition, vec3.fromValues(7, 8, 4), vec3.fromValues(1, 0, 0));
 
     renderShadowMap();
     drawObjects(drawCall);
